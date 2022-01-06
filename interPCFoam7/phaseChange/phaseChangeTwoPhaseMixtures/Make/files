@@ -1,0 +1,6 @@
+phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixture.C
+phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixtureNew.C
+
+Lee/Lee.C
+
+LIB = $(FOAM_USER_LIBBIN)/libphaseChangeTwoPhaseMixtures

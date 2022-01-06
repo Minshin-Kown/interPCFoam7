@@ -1,0 +1,56 @@
+# 1 "Make/options"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 8 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+
+# 17 "/usr/include/stdc-predef.h" 3 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 8 "<command-line>" 2
+# 1 "Make/options"
+EXE_INC = -I. -I$(LIB_SRC)/transportModels/lnInclude -I./phaseChange/twoPhaseModels/twoPhaseMixture/lnInclude -I$(LIB_SRC)/twoPhaseModels/interfaceProperties/lnInclude -I$(LIB_SRC)/twoPhaseModels/incompressibleTwoPhaseMixture/lnInclude -I./phaseChange/phaseChangeTwoPhaseMixtures/lnInclude -I$(LIB_SRC)/MomentumTransportModels/momentumTransportModels/lnInclude -I$(LIB_SRC)/MomentumTransportModels/incompressible/lnInclude -I$(LIB_SRC)/finiteVolume/lnInclude -I$(LIB_SRC)/finiteVolume/cfdTools -I$(LIB_SRC)/dynamicFvMesh/lnInclude -I$(LIB_SRC)/meshTools/lnInclude -I./solid -I$(LIB_SRC)/thermophysicalModels/solidThermo/lnInclude -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude -I$(LIB_SRC)/regionModels/regionModel/lnInclude -I$(LIB_SRC)/thermophysicalModels/specie/lnInclude -I$(LIB_SRC)/ThermophysicalTransportModels/lnInclude -I./phaseChange/smoothInterfaceProperties/lnInclude 
+# 21 "Make/options"
+
+EXE_LIBS = -lphaseChangeTwoPhaseMixtures -ltwoPhaseMixture -linterfaceProperties -lincompressibleTransportModels -lmomentumTransportModels -lfiniteVolume -ldynamicFvMesh -ltopoChangerFvMesh -lfvOptions -lmeshTools -lsolidThermo -lregionModels -lfluidThermophysicalModels -lspecie -lincompressibleTwoPhaseMixture -lincompressibleMomentumTransportModels -L$(FOAM_USER_LIBBIN) -lsmoothInterfaceProperties -ltwoPhaseProperties

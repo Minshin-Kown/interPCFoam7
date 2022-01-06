@@ -1,0 +1,41 @@
+EXE_INC = \
+    -I. \
+    -I$(LIB_SRC)/transportModels/lnInclude \
+    -I./phaseChange/twoPhaseModels/twoPhaseMixture/lnInclude \
+    -I$(LIB_SRC)/twoPhaseModels/interfaceProperties/lnInclude \
+    -I$(LIB_SRC)/twoPhaseModels/incompressibleTwoPhaseMixture/lnInclude \
+    -I./phaseChange/phaseChangeTwoPhaseMixtures/lnInclude \
+    -I$(LIB_SRC)/MomentumTransportModels/momentumTransportModels/lnInclude \
+    -I$(LIB_SRC)/MomentumTransportModels/incompressible/lnInclude \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(LIB_SRC)/finiteVolume/cfdTools \
+    -I$(LIB_SRC)/dynamicFvMesh/lnInclude \
+    -I$(LIB_SRC)/meshTools/lnInclude \
+    -I./solid \
+    -I$(LIB_SRC)/thermophysicalModels/solidThermo/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I$(LIB_SRC)/regionModels/regionModel/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/specie/lnInclude \
+    -I$(LIB_SRC)/ThermophysicalTransportModels/lnInclude \
+    -I./phaseChange/smoothInterfaceProperties/lnInclude 
+
+EXE_LIBS = \
+    -lphaseChangeTwoPhaseMixtures \
+    -ltwoPhaseMixture \
+    -linterfaceProperties \
+    -lincompressibleTransportModels \
+    -lmomentumTransportModels \
+    -lfiniteVolume \
+    -ldynamicFvMesh \
+    -ltopoChangerFvMesh \
+    -lfvOptions \
+    -lmeshTools \
+    -lsolidThermo \
+    -lregionModels \
+    -lfluidThermophysicalModels \
+    -lspecie \
+    -lincompressibleTwoPhaseMixture \
+    -lincompressibleMomentumTransportModels \
+    -L$(FOAM_USER_LIBBIN) \
+    -lsmoothInterfaceProperties \
+    -ltwoPhaseProperties
