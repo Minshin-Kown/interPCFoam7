@@ -29,4 +29,5 @@
         );
 
         fvOptions.correct(U);
+	KE = 0.5*magSqr(U);
     }

@@ -49,17 +49,10 @@ Info<< "Adding to Kinetic energy field KE\n" << endl;
 
 volScalarField KE
 (
-     IOobject
-     (
-      	"KE",
-	runTime.timeName(),
-	mesh,
-	IOobject::NO_READ,
-	IOobject::AUTO_WRITE
-     ),
-     0.5*magSqr(U)
-);     
-
+ 	"KE",
+	0.5*magSqr(U)
+);
+	
 
 #include "createPhi.H"
 
