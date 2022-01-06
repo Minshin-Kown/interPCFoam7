@@ -4,4 +4,5 @@ solid/solidRegionDiffNo.C \
 phaseChange/smoothInterfaceProperties/smoothInterfaceProperties.C \
 phaseChange/twoPhaseModels/incompressibleTwoPhaseMixture/incompressibleTwoPhaseMixture.C \
 phaseChange/phaseChangeTwoPhaseMixtures/phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixture.C \
-phaseChange/phaseChangeTwoPhaseMixtures/phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixtureNew.C 
+phaseChange/phaseChangeTwoPhaseMixtures/phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixtureNew.C \
+phaseChange/phaseChangeTwoPhaseMixtures/Lee/Lee.C 

@@ -65,7 +65,8 @@ Foam::incompressibleTwoPhaseMixture::incompressibleTwoPhaseMixture
 :
 
 //--------------------add 22.01.03-----------------//
-    IOdictionary
+
+IOdictionary
     (
         IOobject
         (
@@ -80,8 +81,8 @@ Foam::incompressibleTwoPhaseMixture::incompressibleTwoPhaseMixture
 
 
 //	transportModel(U, phi),
-//	phase1Name_("phase1"),
-//	phase2Name_("phase2"),
+	phase1Name_("phase1"),
+	phase2Name_("phase2"),
 
 //--------------------------------------------------//	
 

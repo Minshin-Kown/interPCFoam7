@@ -56,9 +56,12 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::Lee
 )
 :
     phaseChangeTwoPhaseMixture(typeName, U, phi, alpha1Name),
-    rv_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("rv")),
-	rc_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("rc")),
-	T0_("T0", TSatLocal().dimensions(), 0.0)
+//    rv_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("rv")),
+//	rc_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("rc")),
+//	T0_("T0", TSatLocal().dimensions(), 0.0)
+	rv_("rv", dimensionSet(0, 0, -1, 0, 0, 0, 0), phaseChangeTwoPhaseMixtureCoeffs_),
+	rc_("rc", dimensionSet(0, 0, -1, 0, 0, 0, 0), phaseChangeTwoPhaseMixtureCoeffs_),
+	T0_("T0",TSatLocal().dimensions(), 0.0)
 {
     correct();
 }

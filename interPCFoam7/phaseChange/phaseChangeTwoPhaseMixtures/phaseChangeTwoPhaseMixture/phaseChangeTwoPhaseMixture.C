@@ -39,19 +39,17 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 (
     const word& type,
     const volVectorField& U,
-    const surfaceScalarField& phi
+    const surfaceScalarField& phi,
 //------------------22.01.06----------------------//
-    ,const word& alpha1Name
+    const word& alpha1Name
 //------------------------------------------------//
 )
 :
     incompressibleTwoPhaseMixture(U, phi),
     phaseChangeTwoPhaseMixtureCoeffs_(optionalSubDict(type + "Coeffs")),
-    pSat_("pSat", dimPressure, lookup("pSat"))
-
+    pSat_("pSat", dimPressure, lookup("pSat")),
 //------------------------------------add 21.12.27-----------------------------------//
-
-    ,TSat_("TSat", dimensionSet (0, 0, 0, 1, 0, 0, 0), lookup("TSat")),
+    TSat_("TSat", dimensionSet (0, 0, 0, 1, 0, 0, 0), lookup("TSat")),
     TSatLocal_(readBool(lookup("TSatLocal"))),
     Hfg_("Hfg", dimensionSet (0, 2, -2, 0, 0, 0, 0), lookup("Hfg")),
     R_("R", dimensionSet (0, 2, -2, -1, 0, 0, 0), lookup("R"))

@@ -67,6 +67,7 @@ volScalarField KE
 
 Info<< "Reading fluid thermophysical properties\n" << endl;
 
+
 autoPtr<fluidThermo> myfluidThermoPtr (fluidThermo::New(mesh));
 
 fluidThermo& FluidThermo = myfluidThermoPtr();
@@ -101,13 +102,6 @@ const dimensionedScalar& pSat = TPCmixture->pSat();
 
 //-------------------------------------------------------------------//
 
-
- smoothInterfaceProperties interface(alpha1, U, TPCmixture());
-
-
-
-	
-
 // Need to store rho for ddt(rho, U)
 volScalarField rho
 (
@@ -123,7 +117,6 @@ volScalarField rho
     //FluidThermo.rho()
 );
 rho.oldTime();
-
 //-----------------------------------------------------------------//
 Info<< "Generating field rhoPhi\n" << endl;
 
@@ -139,8 +132,24 @@ surfaceScalarField rhoPhi
     ),
     fvc::interpolate(rho)*phi
 );
+
+
+volScalarField K
+(
+    IOobject
+    (
+        "K",
+        runTime.timeName(),
+        mesh,
+        IOobject::READ_IF_PRESENT
+    ),
+    alpha1*K1 + (scalar(1) - alpha1)*K2,
+    alpha1.boundaryField().types()
+);
 //----------------------------------------------------------------//
 
+
+ smoothInterfaceProperties interface(alpha1, U, TPCmixture());
 
 
 // Construct incompressible turbulence model

@@ -96,12 +96,12 @@ public:
             components,
             (
                 const volVectorField& U,
-                const surfaceScalarField& phi
+                const surfaceScalarField& phi,
 //------------------------22.01.05---------------------------//		
-//		,const word& alpha1Name = "alpha1"
+		const word& alpha1Name
 //-------------------------------5---------------------------//
             ),
-            (U, phi)    //----22.01.05
+            (U, phi, alpha1Name)    //----22.01.05
         );
 
 
@@ -112,9 +112,9 @@ public:
         (
             const word& type,
             const volVectorField& U,
-            const surfaceScalarField& phi
+            const surfaceScalarField& phi,
 //------------------------22.01.05---------------------------//
-	    ,const word& alpha1Name = "alpha1"
+	    const word& alpha1Name = "alpha1"
 //-----------------------------------------------------------//
         );
 
@@ -128,9 +128,9 @@ public:
         static autoPtr<phaseChangeTwoPhaseMixture> New
         (
             const volVectorField& U,
-            const surfaceScalarField& phi
+            const surfaceScalarField& phi,
 //------------------------22.01.05---------------------------//
-            ,const word& alpha1Name = "alpha1"
+            const word& alpha1Name = "alpha1"
 //----------------------------------------------------------//
         );
 
