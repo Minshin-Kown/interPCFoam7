@@ -46,13 +46,27 @@ volScalarField alpha1
 
 
 Info<< "Adding to Kinetic energy field KE\n" << endl;
-
+/*
 volScalarField KE
 (
  	"KE",
 	0.5*magSqr(U)
 );
-	
+*/
+
+volScalarField KE
+(
+     IOobject
+     (
+      	"KE",
+	runTime.timeName(),
+	mesh,
+	IOobject::NO_READ,
+	IOobject::AUTO_WRITE
+     ),
+     0.5*magSqr(U)
+);     
+
 
 #include "createPhi.H"
 
@@ -204,7 +218,9 @@ Info<< "    Adding to flow work dpdt term\n" << endl;
         (
             "dpdt",
             runTime.timeName(),
-            mesh
+            mesh,
+            IOobject::NO_READ,
+            IOobject::AUTO_WRITE
         ),
         mesh,
         dimensionedScalar
