@@ -115,7 +115,8 @@ int main(int argc, char *argv[])
         // --- Pressure-velocity PIMPLE corrector loop
         while (pimple.loop())
         {
-            if (pimple.firstPimpleIter() || moveMeshOuterCorrectors)
+
+    		if (pimple.firstPimpleIter() || moveMeshOuterCorrectors)
             {
                 mesh.update();
 

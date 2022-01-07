@@ -1,3 +1,4 @@
+/*
 surfaceScalarField rhoPhi
      (
         IOobject
@@ -9,11 +10,11 @@ surfaceScalarField rhoPhi
          mesh,
          dimensionedScalar(dimMass/dimTime, 0)
      );
+*/
 
+const dictionary& alphaControls = mesh.solverDict(alpha1.name());	//fvSolution에서 alpha1.name 읽어와 별칭 alphaControls
 
-const dictionary& alphaControls = mesh.solverDict(alpha1.name());
-
-const label nAlphaCorr(alphaControls.lookup<label>("nAlphaCorr"));
+const label nAlphaCorr(alphaControls.lookup<label>("nAlphaCorr"));	//alphaControls의 nAlphaCoor
 
 const label nAlphaSubCycles(alphaControls.lookup<label>("nAlphaSubCycles"));
 
