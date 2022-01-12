@@ -232,6 +232,7 @@ Info<< "    Adding to flow work dpdt term\n" << endl;
 
 //-------------------------------------------------//
 
+#include "readTransportProperties.H"  //-----add 22.01.12
 
 //-------------------mass transfer rate terms 22.01.03-----------------------------//
 volScalarField mDotT

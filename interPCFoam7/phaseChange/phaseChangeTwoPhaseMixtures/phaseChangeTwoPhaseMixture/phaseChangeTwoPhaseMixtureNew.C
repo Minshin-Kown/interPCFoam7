@@ -58,11 +58,11 @@ Foam::phaseChangeTwoPhaseMixture::New
     );
 
 //-----------------------------22.01.12----------------------------------------//
-    bool phaseChange = true;
-    if(transportPropertiesDict.found("phaseChange"))
-    {
-	phaseChange = Switch(transportPropertiesDict.lookup("phaseChange"));
-    }
+//    bool phaseChange = true;
+//    if(transportPropertiesDict.found("phaseChange"))
+//    {
+//	phaseChange = Switch(transportPropertiesDict.lookup("phaseChange"));
+//    }
 //-----------------------------------------------------------------------------//
 
     Info<< "Selecting phaseChange model "
@@ -83,6 +83,7 @@ Foam::phaseChangeTwoPhaseMixture::New
     }
 
     return autoPtr<phaseChangeTwoPhaseMixture>(cstrIter()(U, phi, alpha1Name));  //=22.01.05
+
 }
 
 

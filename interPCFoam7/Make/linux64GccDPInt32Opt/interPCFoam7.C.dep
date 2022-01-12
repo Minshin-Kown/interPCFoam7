@@ -107,6 +107,7 @@ $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createPhi.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/readGravitationalAcceleration.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/readhRef.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/gh.H \
+readTransportProperties.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createFvOptions.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/continuityErrs.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/readTimeControls.H \
@@ -986,6 +987,7 @@ $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createPhi.H :
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/readGravitationalAcceleration.H :
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/readhRef.H :
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/gh.H :
+readTransportProperties.H :
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/createFvOptions.H :
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/continuityErrs.H :
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/readTimeControls.H :
