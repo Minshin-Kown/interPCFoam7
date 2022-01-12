@@ -1,13 +1,39 @@
 {
     #include "alphaScheme.H"
 
+//------------------------22.01.10-----------------------------------------//
+
+//add alpha"R"Scheme
+	
+static const word divAlpharName("div(phirb,alpha)");
+
+const word alpharScheme(mesh.divScheme(divAlpharName)[1].wordToken());
+
+ITstream compressionScheme2
+(
+    compressionSchemes.found(alpharScheme)
+  ? mesh.divScheme(divAlpharName)
+  : ITstream
+    (
+        divAlpharName,
+        tokenList
+        {
+            word("Gauss"),
+            word("interfaceCompression"),
+            alpharScheme,
+            alphaControls.lookup<scalar>("cAlpha")
+        }
+    )
+);
+//---------------------------------------------------------------------------//
+
     Pair<tmp<volScalarField>> vDotAlphal = TPCmixture->vDotAlphal();
     const volScalarField& vDotcAlphal = vDotAlphal[0]();
     const volScalarField& vDotvAlphal = vDotAlphal[1]();
-    const volScalarField vDotvmcAlphal(vDotvAlphal - vDotcAlphal);
+   // const volScalarField vDotvmcAlphal(vDotvAlphal - vDotcAlphal);
 
     tmp<surfaceScalarField> talphaPhi;
-
+/*---------------------------------------22.01.12--------------------------//
     if (MULESCorr)
     {
         fvScalarMatrix alpha1Eqn
@@ -35,7 +61,7 @@
 
         talphaPhi = alpha1Eqn.flux();
     }
-
+----------------------------------------------------------------------------------*/
     volScalarField alpha10("alpha10", alpha1);
 //--------------------22.01.07 chtFlowboiling 시작부분-------------------------------------------//
 
@@ -45,7 +71,10 @@
 
     for (int aCorr=0; aCorr<nAlphaCorr; aCorr++)
     {
+ 	surfaceScalarField  phiAdd = -fvc::flux(-phir, scalar(1)-alpha1, divAlpharName); //-----22.01.12 tmp 안됨
+
         tmp<surfaceScalarField> talphaPhiCorr
+	///surfaceScalarField talphaPhiCorr
         (
             fvc::flux
             (
@@ -53,16 +82,62 @@
                 alpha1,
                 compressionScheme.rewind()
             )
-//------------------------------22.01.07--------------------------------------------------------//
+//------------------------------22.01.12--------------------------------------------------------//
 	    + fvc::flux
 	    (
-	        -fvc::flux(-phir, scalar(1)-alpha1, compressionScheme.rewind()),
+         	phiAdd,		//overloading part
 		alpha1,
-		compressionScheme.rewind()
+		compressionScheme2.rewind()
 	    )
-//----------------------------------------------------------------------------------------------//
         );
 
+       volScalarField Sp
+        (
+            IOobject
+            (
+                "Sp",
+                runTime.timeName(),
+                mesh
+            ),
+            vDotvAlphal - vDotcAlphal
+        );
+
+
+        volScalarField Su
+        (   
+            IOobject
+            (
+                "Su",
+                runTime.timeName(),
+                mesh
+            ),
+            // Divergence term is handled explicitly to be
+            // consistent with the explicit transport solution
+            divU*alpha1
+          + vDotcAlphal
+        );
+
+	if(phaseChange)
+	{
+		MULES::explicitSolve
+			(
+			 geometricOneField(),
+			 alpha1,
+			 phi,
+			 phiAlpha,
+			 Sp,
+			 Su,
+			 1,
+			 0
+			);
+	}
+	else
+	{
+		MULES::explicitSolve(alpha1, phi, phiAlpha, 1, 0);
+	}
+//----------------------------------------------------------------------------------------------//
+
+/*---------------------------------22.01.12---------------------------------------------------//
         if (MULESCorr)
         {
             talphaPhiCorr.ref() -= talphaPhi();
@@ -112,7 +187,7 @@
 
             talphaPhi = talphaPhiCorr;
         }
-
+----------------------------------------------------------------------------------------------*/
        // alpha2 = 1.0 - alpha1;
     }
 
