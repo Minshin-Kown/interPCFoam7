@@ -154,8 +154,9 @@ int main(int argc, char *argv[])
             #include "alphaEqnSubCycle.H"
 
             //mixture.correct();
-	    //interface.correct();
-	    TPCmixture->correct();
+	    interface.correct();
+	    //TPCmixture->correct();
+	    turbulence->correct();
 
             #include "UEqn.H"			//Momentum-Predictor : get velocity vector
 	    #include "EEqn.H"

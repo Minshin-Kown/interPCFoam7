@@ -10,7 +10,7 @@ Info<<"\n----------<Solve fluid hEqn>----------"<< endl;
     fvScalarMatrix EEqn
     (
         fvm::ddt(rho, he) + fvm::div(rhoPhi, he) 		//phi is including rho [kg/s]
-      + fvc::ddt(rho, KE) + fvc::div(rhoPhi, KE)			//K is (1/2)u^2; K.E. term
+      //+ fvc::ddt(rho, KE) + fvc::div(rhoPhi, KE)			//K is (1/2)u^2; K.E. term
       + (
          //   he.name() == "e"
          // ?

@@ -30,10 +30,10 @@ if (nAlphaSubCycles > 1)
     )
     {
         #include "alphaEqn.H"
-        rhoPhiSum += (runTime.deltaT()/totalDeltaT)*rhoPhi;
+//        rhoPhiSum += (runTime.deltaT()/totalDeltaT)*rhoPhi;		//----22.01.12
     }
 
-    rhoPhi = rhoPhiSum;
+//    rhoPhi = rhoPhiSum;	//----22.01.12
 }
 else
 {
