@@ -4,6 +4,9 @@ surfaceScalarField phic(mag(phi/mesh.magSf()));
 phic = min(interface.cAlpha()*phic, max(phic)); 
 //-------------------------------------------------------------//
 
+//----------------------------22.01.12-------------------------//
+dimensionedScalar totalDeltaT = runTime.deltaT();
+//-------------------------------------------------------------//
 
 if (nAlphaSubCycles > 1)
 {

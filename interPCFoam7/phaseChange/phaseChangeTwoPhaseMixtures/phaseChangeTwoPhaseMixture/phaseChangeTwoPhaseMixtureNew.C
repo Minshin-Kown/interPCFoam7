@@ -57,6 +57,14 @@ Foam::phaseChangeTwoPhaseMixture::New
         transportPropertiesDict.lookup("phaseChangeTwoPhaseMixture")
     );
 
+//-----------------------------22.01.12----------------------------------------//
+    bool phaseChange = true;
+    if(transportPropertiesDict.found("phaseChange"))
+    {
+	phaseChange = Switch(transportPropertiesDict.lookup("phaseChange"));
+    }
+//-----------------------------------------------------------------------------//
+
     Info<< "Selecting phaseChange model "
         << phaseChangeTwoPhaseMixtureTypeName << endl;
 

@@ -32,7 +32,7 @@ ITstream compressionScheme2
     const volScalarField& vDotvAlphal = vDotAlphal[1]();
    // const volScalarField vDotvmcAlphal(vDotvAlphal - vDotcAlphal);
 
-    tmp<surfaceScalarField> talphaPhi;
+    //tmp<surfaceScalarField> talphaPhi;
 /*---------------------------------------22.01.12--------------------------//
     if (MULESCorr)
     {
@@ -73,9 +73,9 @@ ITstream compressionScheme2
     {
  	surfaceScalarField  phiAdd = -fvc::flux(-phir, scalar(1)-alpha1, divAlpharName); //-----22.01.12 tmp 안됨
 
-        tmp<surfaceScalarField> talphaPhiCorr
-	///surfaceScalarField talphaPhiCorr
-        (
+        surfaceScalarField talphaPhiCorr
+	//surfaceScalarField phiAlpha	//오류 발생
+	(
             fvc::flux
             (
                 phi,
@@ -124,17 +124,28 @@ ITstream compressionScheme2
 			 geometricOneField(),
 			 alpha1,
 			 phi,
-			 phiAlpha,
+			 //phiAlpha(),
+			 talphaPhiCorr,
 			 Sp,
 			 Su,
-			 1,
-			 0
+			 oneField(),
+			 zeroField()
 			);
 	}
 	else
 	{
-		MULES::explicitSolve(alpha1, phi, phiAlpha, 1, 0);
+		MULES::explicitSolve
+			(
+			 geometricOneField(),
+			 alpha1, 
+			 phi, 
+			 talphaPhiCorr,
+			 //phiAlpha, 
+			 oneField(), 
+			 zeroField()
+			);
 	}
+
 //----------------------------------------------------------------------------------------------//
 
 /*---------------------------------22.01.12---------------------------------------------------//
@@ -189,9 +200,10 @@ ITstream compressionScheme2
         }
 ----------------------------------------------------------------------------------------------*/
        // alpha2 = 1.0 - alpha1;
+       rhoPhi +=
+	       (runTime.deltaT()/totalDeltaT)
+	       *(talphaPhiCorr*(rho1 - rho2) + phi*rho2);
     }
-
-    rhoPhi = talphaPhi()*(rho1 - rho2) + phi*rho2;
 
     Info<< "Liquid phase volume fraction = "
         << alpha1.weightedAverage(mesh.V()).value()
