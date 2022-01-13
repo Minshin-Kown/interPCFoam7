@@ -173,7 +173,8 @@ int main(int argc, char *argv[])
 	    //#include "EEqn.H"
 	    //#include "./solid/setRegionSolidFields.H"
 	    #include "./solid/solveSolid.H"     
-	 
+		
+	    TPCmixture->correct(); 
 	}
 
 
