@@ -26,7 +26,7 @@ Pair<tmp<volScalarField> > vDotT = TPCmixture->vDotT();
     fvScalarMatrix EEqn
     (
         fvm::ddt(rho, he) + fvm::div(rhoPhi, he) 		//phi is including rho [kg/s]
-      //+ fvc::ddt(rho, KE) + fvc::div(rhoPhi, KE)			//K is (1/2)u^2; K.E. term
+      //+ fvc::ddt(rho, KE) + fvc::div(rhoPhi, KE)			//K is (1/2)u^2; K.E. term //he[J/kg]
       + (
          //   he.name() == "e"
          // ?
@@ -61,7 +61,8 @@ Pair<tmp<volScalarField> > vDotT = TPCmixture->vDotT();
 			//fvm::Sp(vDotvT-vDotcT,T) - (vDotvT-vDotcT)*TSat
 			//fvm::Sp(vDotcT-vDotvT,T)	//----22.01.13 T가 없어서 불가능
 			fvm::Sp(vDotcT-vDotvT, he) 
-			- (vDotcT-vDotvT)*TSatLocal	//
+			- (vDotcT-vDotvT)*TSatLocal*(C1*alpha1+(1.0-alpha1)*C2)	//
+			
 		 );
 	 }
 	 else
