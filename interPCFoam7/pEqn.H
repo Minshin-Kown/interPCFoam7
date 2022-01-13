@@ -12,21 +12,28 @@
 
     rAU = 1.0/UEqn.A();		//correcPhi 조건 제거
     surfaceScalarField rAUf("rAUf", fvc::interpolate(rAU()));		//interface's RAU
-    volVectorField HbyA(constrainHbyA(rAU()*UEqn.H(), U, p_rgh));	//residual matrix H
-
+    volVectorField HbyA(constrainHbyA(rAU()*UEqn.H(), U, p_rgh));	//openFOAM8에는 constraintHbyA가 새로 생성
+									//-----22.01.13 추후 확인하기
     surfaceScalarField phiHbyA
     (
         "phiHbyA",
         fvc::flux(HbyA)
-      + fvc::interpolate(rho*rAU())*fvc::ddtCorr(U, phi, Uf)
+      + fvc::interpolate(rho*rAU())*fvc::ddtCorr(U, phi, Uf)		//-----22.01.13 유도 방법 다름 확인하기
     );
 
+
+
+
+//----------------------22.01.13 <2.2.0 버젼에는 없는 파트>---------------------//
     if (p_rgh.needReference())
     {
         fvc::makeRelative(phiHbyA, U);
         adjustPhi(phiHbyA, U, p_rgh);
         fvc::makeAbsolute(phiHbyA, U);
     }
+//------------------------------------------------------------------------------//
+
+
 
     surfaceScalarField phig                         //source term?? by using H matrix?
     (
@@ -47,18 +54,50 @@
     const volScalarField& vDotcP = vDotP[0]();
     const volScalarField& vDotvP = vDotP[1]();
 
+
+
+
+
+
+
     while (pimple.correctNonOrthogonal())
     {
         fvScalarMatrix p_rghEqn
         (
             fvc::div(phiHbyA) - fvm::laplacian(rAUf, p_rgh)
+
+//--------------------22.01.13 압축성 기체의 압력의 의한 영향 고려 부분 ------------------//
           - (vDotvP - vDotcP)*(TPCmixture->pSat() - rho*gh)
           + fvm::Sp(vDotvP - vDotcP, p_rgh)
+//----------------------------------------------------------------------------------------//
+
         );
 
         p_rghEqn.setReference(pRefCell, pRefValue);
 
-        p_rghEqn.solve();
+//        p_rghEqn.solve();
+
+//-------------------------------22.01.13------------------------------------//
+
+	if (phaseChange){
+		solve
+			(
+			 p_rghEqn == fvm::Sp(vDotcP-vDotvP,p_rgh)-(vDotcP-vDotvP)*(pSat-rho*gh),
+			 //fvMatrix<scalar>::fvSolver::solve(p_rgh.select(pimple.finalInnerIter()))
+			 mesh.solver(p_rgh.select(pimple.finalInnerIter()))
+			);
+	}
+/*
+	else
+	{
+		solve
+			(
+			 p_rghEqn,
+			 mesh.solver(p_rgh.select(pimple.finalInnerIter()))
+			);
+	};
+*/	
+//--------------------------------------------------------------------------//
 
         if (pimple.finalNonOrthogonalIter())
         {
@@ -88,9 +127,10 @@
         );
         p_rgh = p - rho*gh;
     }
-
+/*---------22.01.13
     if (!correctPhi)
     {
         rAU.clear();
     }
+*/    
 }
