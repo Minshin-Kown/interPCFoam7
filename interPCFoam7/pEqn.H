@@ -67,14 +67,14 @@
             fvc::div(phiHbyA) - fvm::laplacian(rAUf, p_rgh)
 
 //--------------------22.01.13 압축성 기체의 압력의 의한 영향 고려 부분 ------------------//
-          - (vDotvP - vDotcP)*(TPCmixture->pSat() - rho*gh)
-          + fvm::Sp(vDotvP - vDotcP, p_rgh)
+//          - (vDotvP - vDotcP)*(TPCmixture->pSat() - rho*gh)
+//          + fvm::Sp(vDotvP - vDotcP, p_rgh)
 //----------------------------------------------------------------------------------------//
 
         );
 
-        p_rghEqn.setReference(pRefCell, pRefValue);
-
+        //p_rghEqn.setReference(pRefCell, pRefValue);
+	p_rghEqn.setReference(pRefCell, getRefCellValue(p, pRefCell));
 //        p_rghEqn.solve();
 
 //-------------------------------22.01.13------------------------------------//
@@ -82,21 +82,21 @@
 	if (phaseChange){
 		solve
 			(
-			 p_rghEqn == fvm::Sp(vDotcP-vDotvP,p_rgh)-(vDotcP-vDotvP)*(pSat-rho*gh),
+			 p_rghEqn == fvm::Sp(vDotcP-vDotvP,p_rgh)-(vDotcP-vDotvP)*(pSat-rho*gh)
 			 //fvMatrix<scalar>::fvSolver::solve(p_rgh.select(pimple.finalInnerIter()))
-			 mesh.solver(p_rgh.select(pimple.finalInnerIter()))
+			 //,mesh.solver(p_rgh.select(pimple.finalInnerIter()))
 			);
 	}
-/*
+
 	else
 	{
 		solve
 			(
-			 p_rghEqn,
-			 mesh.solver(p_rgh.select(pimple.finalInnerIter()))
+			 p_rghEqn
+			 //,mesh.solver(p_rgh.select(pimple.finalInnerIter()))
 			);
-	};
-*/	
+	}
+	
 //--------------------------------------------------------------------------//
 
         if (pimple.finalNonOrthogonalIter())
@@ -127,10 +127,20 @@
         );
         p_rgh = p - rho*gh;
     }
+}
 /*---------22.01.13
     if (!correctPhi)
     {
         rAU.clear();
     }
 */    
-}
+//------------------------------------22.01.13------------------------------------------//
+//mass transfer rate 정의 for using at Energy Equation
+
+    Pair<tmp<volScalarField> > mDot = TPCmixture->mDotP();
+       const volScalarField& mDotcP = mDot[0]();
+       const volScalarField& mDotvP = mDot[1]();
+
+       mDotP = (mDotcP-mDotvP)*(p-pSat);
+
+//--------------------------------------------------------------------------------------//
